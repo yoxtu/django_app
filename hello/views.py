@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from .models import Friend
 from .forms import FriendForm
+from django.views.generic import ListView
+from django.views.generic import DetailView
 
 def index(request):
     data = Friend.objects.all()
@@ -16,6 +18,7 @@ def index(request):
 def create(request):
     if (request.method == 'POST'):
         obj = Friend()
+        friend = FriendForm(request.POST, instance=obj)
         friend.save()
         return redirect(to='/hello')
     params = {
@@ -37,3 +40,20 @@ def edit(request,num):
     }
     return render(request, 'hello/edit.html',params)
 
+def delete(request,num):
+    friend = Friend.objects.get(id=num)
+    if (request.method == 'POST'):
+        friend.delete()
+        return redirect(to='/hello')
+    params = {
+        'title': 'HEllo',
+        'id': num,
+        'obj': friend,
+    }
+    return render(request, 'hello/delete.html',params)
+
+class FriendList(ListView):
+    model = Friend
+
+class FriendDetail(DetailView):
+    model = Friend

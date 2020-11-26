@@ -7,20 +7,16 @@
     <link rel="stylesheet" type="text/css" href="{% static 'WebSystem/css/style.css' %}" />
 </head>
 <body>
-    <h1>{{title}}</h1>
-    <form action="{% url 'CalcPayment' %}" method="POST">
-        {% csrf_token %}
+    <h1>バイト給与</h1>
+    {{ title }}
+    <form method="POST" action="{% url 'form' %} ">
         <table>
+            {% csrf_token %}
             {{ form.as_table }}
-            <tr>
-                <th><p>{{message}}</p></th><td>{{ result }}</td>
-            </tr>
-            <tr>
-                <th></th><td>
-                    <input type="submit" value="給与計算(Enter)">
-                </td>
-            </tr>
+            <tr><th>
+                <input type="submit" name="submit" value="ボタン">
+            </th></tr>
         </table>
-    </form>
+    {{ result }}
 </body>
 </html>

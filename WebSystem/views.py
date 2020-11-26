@@ -1,27 +1,15 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from .forms import *
-from .processing import *
-# Create your views here.
+from .sum import *
 
-def CalcPayment(request):
+# Create your views here.
+def calcPaymentEX(request):
     params = {
-        'title': '給料計算',
-        'form': CalcPaymentForm(),
+        'title': 'バイト給与計算',
+        'form': calcPayment()
     }
-    if(request.method == 'POST'):
-        params['message'] ='支給額(A):'
-        params['result'] = CalcPay(request.POST['hourly_wage'],\
-            request.POST['hour'],request.POST['minute']) + \
-            CalcPay(request.POST['hourly_wage'],request.POST['night_hour'],\
-            request.POST['night_minute'],1.25)
-        params['form'] = CalcPaymentForm(request.POST)
+    if request.method == 'POST':
+        params['result'] = sum(request.POST['hourly_wage'],request.POST['hour'],request.POST['minutes'],1) + sum2(request.POST['hourly_wage'],request.POST['hour'],request.POST['minutes'],1.25)
+        params['form'] = calcPaymentEX(request.POST)
     return render(request, 'WebSystem/index.html', params)
-    #     params['message'] = request.POST['hourly_wage'] + '<br>' +\
-    #         request.POST['hour'] + '<br>' +\
-    #         request.POST['minute'] + '<br>'+\
-    #         request.POST['night_hour'] + '<br>' +\
-    #         request.POST['night_minute']
-    #     params['form'] = WebSystemForm(request.POST)
-    # return render(request, 'WebSystem/index.html',params)
 
