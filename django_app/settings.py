@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'hello',
-    'WebSystem'
+    'WebSystem',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +84,7 @@ DATABASES = {
         'NAME': 'django',
         'USER': 'seshita',
         'PASSWORD': 'sm11231123',
-        'HOST': '180.23.117.213',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
