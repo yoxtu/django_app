@@ -4,5 +4,8 @@ from django.http import HttpResponse
 # Create your views here.
 
 def index(request):
-    msg = request.GET['msg']
-    return HttpResponse('you typed:"'+msg+'".')
+    params = {
+        'title': 'BM_System',
+        'data':'data',
+    }
+    return render(request, 'BM_System/index.html',params)
