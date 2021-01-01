@@ -15,6 +15,7 @@ def index(request):
     return render(request, 'hello/index.html',params)
 # Create your views here.
 # Create model
+
 def create(request):
     if (request.method == 'POST'):
         obj = Friend()
@@ -57,3 +58,8 @@ class FriendList(ListView):
 
 class FriendDetail(DetailView):
     model = Friend
+
+def login(request):
+    params = {
+    }
+    return render(request, 'hello/login.html')

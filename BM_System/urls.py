@@ -1,10 +1,11 @@
 from django.urls import path
 from . import views
 
+# app_name = 'BM_System'
 urlpatterns = [
-    path('',views.index,name='index'),
+    path('',views.home,name='home'),
     path('stock',views.stock,name='stock'),
     path('lending',views.lending,name='lending'),
-    path('login',views.login,name='login'),
-    path('contact',views.contact,name='contact')
+    path('contact',views.contact,name='contact'),
+    path('contact/done/',views.done,name='done'), 
 ]

@@ -1,0 +1,12 @@
+{% extends "hello/base.html" %}
+{% block titele %}ログイン{% endblock %}
+{% block content %}
+<div>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><a href="{% url 'password_reset' %}">パスワードを忘れた</a></p>
+        <button type="submit" >ログイン</button>
+    </form>
+</div>
+{% endblock %}

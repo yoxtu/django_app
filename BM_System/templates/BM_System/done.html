@@ -1,0 +1,56 @@
+{% extends "BM_System/base.html" %}
+{% load static %}
+
+<!-- ヘッダー -->
+{% block header %}
+<header>
+    <h1><a href="{% url 'home' %}"><img src="{% static 'BM_System/img/festisite_facebook.png' %}" alt="BM_System"></a></h1>
+    <div id="header_contact"><a href="{% url 'contact' %}"><img src="{% static 'BM_System/img/btn_contact.jpg' %}" alt="お問い合わせ"></a></div>
+    <nav id="global_navi">
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'stock' %}">在庫一覧</a></li>
+            <li><a href="{% url 'lending' %}">貸し出し状況</a></li>
+            <li><a href="{% url 'login' %}">ログイン/登録</a></li>
+            <li><a href="{% url 'contact' %}">お問い合わせ</a></li>
+        </ul>
+    </nav>
+</header>
+{% endblock %}
+<!-- /ヘッダー -->
+
+
+<!-- メイン -->
+{% block main %}
+<div id="main">
+    <div id="breadcrumb">
+        <ol>
+            <li><a href="{% url 'contact' %}">HOME</a></li>
+            <li>お問い合わせ</li>
+            <li>完了</li>
+        </ol>
+    </div>
+    <article>
+        <h4>お問い合わせありがとうございます。</h4>
+        <a href="{% url 'home' %}"><button type="button">トップページ</button></a>
+    </article>
+</div>
+{% endblock %}
+<!-- /メイン -->
+
+<!-- フッター -->
+{% block footer %}
+<footer>
+    <div id="footer_nav">
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'stock' %}">在庫一覧</a></li>
+            <li><a href="{% url 'lending' %}">貸し出し状況</a></li>
+            <li><a href="{% url 'login' %}">ログイン/登録</a></li>
+            <li>お問い合わせ</li>
+        </ul>
+    </div>
+    <small>&copy; 2020 濱本&瀬下</small>
+</footer>
+{% endblock %}
+<!-- /フッター -->

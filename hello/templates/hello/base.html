@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang='ja'>
+<body>
+    <div class="container">
+    <header>
+        <div class="title">{% block titele %}Sample{% endblock %}</div>
+        {% if user.is_authenticated %}
+        <p>{{ user.username }}でログイン中</p>
+        {% else %}
+        <p>ログインしていません</p>
+        {% endif %}
+    </header>
+    <!-- メインコンテンツ -->
+    <div class="content">
+        <!-- コンテンツ -->
+        {% block content %}{% endblock %}
+    </div>
+</div>
+</body>
+</html>

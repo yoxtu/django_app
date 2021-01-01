@@ -21,6 +21,7 @@
                 <td><a href="{% url 'delete' item.id %}">Delete</a></td>
             </tr>
         {% endfor %}
+        <a href="{% url 'login' %}">login</a><br>
         <a href="{% url 'create' %}">create</a>
         </table>
     </body>

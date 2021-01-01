@@ -37,9 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'hello',
+    'accounts.apps.AccountsConfig', # 追記
+    'BM_System',
     'WebSystem',
-    'BM_System'
+    'hello',
 ]
 
 MIDDLEWARE = [
@@ -127,4 +128,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = "C:/xampp/htdocs/static"
+STATIC_ROOT = os.path.join(BASE_DIR, 'deploy')  # プロジェクト直下のdeployディレクトリを指定
+
+
+LOGIN_URL = 'login' # ログインしていないときのリダイレクト先
+LOGIN_REDIRECT_URL = 'stock' # ログイン後のリダイレクト先
+LOGOUT_REDIRECT_URL = 'home' # ログアウト後のリダイレクト先
+
+# フォーム作成メール設定(送信元)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.googlemail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'mysystem1123@gmail.com'
+
+# 管理者用(送信先)
+EMAIL_HOST_ADMIN = [
+    'yoxtu11231123@gmail.com',
+    'sakura18683@gmail.com',
+]
+EMAIL_HOST_PASSWORD = 'ywmtzghwffvonxfg'
