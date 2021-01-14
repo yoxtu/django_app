@@ -8,6 +8,9 @@ from .forms import ContactForm
 from BM_System.processing import *
 # ここまで
 
+from .models import Book_stock
+
+
 # Create your views here.
 
 
@@ -19,12 +22,40 @@ def home(request):
     }
     return render(request, 'BM_System/home.html',params)
 
+# 貸出処理
 def stock(request):
+    date = Book_stock.objects.all()
     params = {
         'title': '在庫一覧',
-        'user_name' : str(request.user) 
+        'user_name' : str(request.user),
+        'date':date
     }
     return render(request, 'BM_System/stock.html',params)
+
+def lended(request, ID):
+    book_obj = Book_stock.objects.get(id = ID)
+    # Profile_obj = Profile.objects.get(id = ID)
+    # lender_list = make_list(Profile_obj.book_title)
+    if len(lender_list) < 3:
+        if book_obj.number_books >= 1:
+            # 本から冊数を引く
+            book_obj.number_books -= 1
+            # Profileにtitleを足す処理
+            # lender_list.append(book_obj.title)
+            Profile_obj.book_title = make_text(lender_list)
+            # セーブする
+            Profile_obj.save()
+            book_obj.save()
+            # 成否をする
+            lend_jage = True
+            # lend_jage = False
+    paramas = {
+        'title':book_obj,
+        'lend_jage':lend_jage,
+    }
+    return render(request, 'BM_System/stock_after.html',paramas)
+
+# 貸出処理ここまで
 
 def lending(request):
     params = {
@@ -53,7 +84,7 @@ def contact(request):
                 send_mail(name, message, email, recipients)
             except BadHeaderError:
                 return HttpResponse('無効なヘッダーが見つかりました。')
-            return redirect('contact/done')
+            return redirect('done')
     else:
         form = ContactForm()
     params = {
@@ -68,6 +99,7 @@ def done(request):
         'title' : '完了',
         'user_name' : str(request.user),
     }
-    return render(request, 'BM_System/done.html')
+    return render(request, 'BM_System/done.html', params)
 
 # ここまで
+

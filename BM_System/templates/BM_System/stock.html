@@ -29,20 +29,28 @@
         </ol>
     </div>
     <article>
-        <h1>システム紹介</h1>
-        <p class="lead">このシステムは、<a href="https://www.o-hara.ac.jp/it-creator/">東京情報クリエイター工学院専門学校</a>の図書管理システムです。</p>
-        <section>
-            <h2>機能一覧</h2>
-            <section>
-                <h3>在庫一覧</h3>
-                <p>図書室にある本の一覧を表示します。<br>また、貸し出されているかどうかも確認できます。</p>
-                <h3>貸し出し状況</h3>
-                <p>自分が借りている本の一覧を見ることができます。</p>
-                <h3>お問い合わせ</h3>
-                <p>本の不備、システムの不具合等を報告できます。</p>
-            </section>
-        </section>
+        <h1>本一覧</h1>
     </article>
+    <table id="stock">
+        {% for item in date %}
+        <tr>
+            <td><p>タイトル:{{item.title}}</p></td>
+            <td><p>著者名:{{item.author}}</p></td>
+            <td><p>発行年:{{item.year_issue}}</p></td>
+            <form action="{% url 'lended' item.id %}" method="POST">
+                {% csrf_token %}
+                <script>
+                    if("{{ item.number_books }}" <= "0"){
+                        document.write("<td><p>全て借りられています。</td></p>")
+                    }else{
+                        document.write("<td><p>冊数:{{item.number_books}}冊</td></p>")
+                        document.write('<td><button type="submit" class = "Btn" onclick= "BtnHide();">借りる</button></td>')
+                        }
+                </script>
+            </form>
+        </tr>
+        {% endfor %}
+    </table>
 </div>
 {% endblock %}
 <!-- /メイン -->

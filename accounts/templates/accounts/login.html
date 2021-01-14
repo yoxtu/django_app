@@ -10,10 +10,10 @@
                 <p><a href="{% url 'create' %}">アカウントがない場合</a></p>
             </td></th></tr>
             <tr><th><td>
-                <button type="submit">ログイン</button>
+                <button type="submit" id="Btn" onclick = "BtnHide(true)">ログイン</button>
+                <p id="Btn_text"></p>
             </td></th></tr>
         </table>
     </form>
 </section>
 {% endblock %}
-{% block accounts_info %}{% endblock %}

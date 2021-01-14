@@ -5,6 +5,34 @@
         <meta charset="UTF-8">
         <title>{{title}}</title>
         <link rel="stylesheet" type="text/css" href="{% static 'BM_System/css/style.css' %}">
+        {% block head %} {% endblock %}
+        <script>
+            var ID,Seccond;
+            function BtnHide(id = false){
+                ID = id;
+                if(id){
+                    document.getElementById("Btn").style.visibility = "hidden";
+                    document.getElementById("Btn_text").textContent = "しばらくお待ちください。～処理中～"
+                }else{
+                    var btn = document.getElementsByClassName("Btn");
+                    for(var i = 0;i < btn.length;i++){
+                        btn[i].style.visibility = "hidden";
+                    }
+                }
+                window.setTimeout(BtnDisp, 10000);
+            }
+            function BtnDisp(){
+                if(ID){
+                    document.getElementById("Btn").style.visibility = "visible";
+                    document.getElementById("Btn_text").textContent = ""
+                }else{
+                    var btn = document.getElementsByClassName("Btn");
+                    for(var i = 0;i < btn.length;i++){
+                        btn[i].style.visibility = "visible";
+                    }
+                }
+            }
+        </script>
     </head>
     <body>
 
@@ -36,9 +64,13 @@
                 {% block accounts_info %}
                 <section id="accounts_info">
                     <h2>アカウント</h2>
-                    {% if user_name == "AnonymousUser" or request.user == "yoxtu" %}
+                    {% if user_name == "AnonymousUser" %}
                     <p>ログインしていません。</p>
                     <p><a href="{% url 'login'%}" class = "login_out_button">ログイン</a></p>
+                    {% elif user_name == "admin" %}
+                    <p>{{request.user}}様</p>
+                    <p><a href="{% url 'logout'%}">ログアウト</a></p>
+                    <p><a href="">ここ</a></p>
                     {% else %}
                     <p>{{request.user}}様</p>
                     <p><a href="{% url 'logout'%}">ログアウト</a></p>
