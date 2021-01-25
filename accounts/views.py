@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.urls import reverse_lazy
+from BM_System import processing
 from django.db import transaction
 from django.shortcuts import *
 from .forms import *
@@ -26,24 +27,43 @@ def create_info(request):
     user_form = UserCreationForm(request.POST or None)
     profile_form = account_info(request.POST or None)
     if request.method == "POST" and user_form.is_valid() and profile_form.is_valid():
+        if processing.exist_submit_token(request):
+            # Userモデルの処理。ログインできるようis_activeをTrueにし保存
+            user = user_form.save(commit=False)
+            user.is_active = True
+            user.save()
 
-        # Userモデルの処理。ログインできるようis_activeをTrueにし保存
-        user = user_form.save(commit=False)
-        user.is_active = True
-        user.save()
-
-        # Profileモデルの処理。↑のUserモデルと紐づけましょう。
-        profile = profile_form.save(commit=False)
-        profile.user = user
-        profile.save()
-        return redirect("stock")
-
-    context = {
+            # Profileモデルの処理。↑のUserモデルと紐づけましょう。
+            profile = profile_form.save(commit=False)
+            profile.gender = profile_form.cleaned_data["gender"]
+            profile.age = profile_form.cleaned_data["age"]
+            profile.birth_date = profile_form.cleaned_data["birth_date"]
+            profile.book_title = ''
+            profile.user = user
+            profile.save()
+            return redirect("stock")
+    submit_token = processing.set_submit_token(request)
+    data = {
         "form1": user_form,
         "form2": profile_form,
+        'submit_token': submit_token,
     }
-    return render(request, 'accounts/create.html', context)
+    return render(request, 'accounts/create.html', data)
 
+
+    # if request.method == "POST":
+    #     if security.exist_submit_token(request):
+    #         comment = '正常にクリックが行われました'	
+    #     else:
+    #         comment = '多重クリックが行われました'
+    # else:
+    #     comment = 'クリックの判定を行います'
+    # submit_token = security.set_submit_token(request)
+    # context = {
+    #     'comment': comment,
+    #     'submit_token': submit_token,
+    # }
+    # return render(request, 'app/test_token_check.html', context)
 
 
 

@@ -87,6 +87,7 @@ DATABASES = {
         'PASSWORD': 'sm11231123',
         'HOST': 'localhost',
         'PORT': '3306',
+        'ATOMIC_REQUESTS': True, #transactionProcessing
     }
 }
 

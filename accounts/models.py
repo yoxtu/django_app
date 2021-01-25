@@ -5,7 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name="profile")
     # name
     # mail
     # password
@@ -14,3 +14,7 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     age = models.IntegerField(default=0)
     book_title = models.CharField(max_length=100,null=True, blank=True)
+
+    def __str__(self):
+        return '学番:' + self.std_num + ' 性別:'+ self.gender+ ' 誕生日:'+ str(self.birth_date)+\
+            ' ' + str(self.age) + '歳'

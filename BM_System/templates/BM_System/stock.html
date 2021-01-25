@@ -31,12 +31,19 @@
     <article>
         <h1>本一覧</h1>
     </article>
-    <table id="stock">
+    <table border="1" id="stock">
+        <tr>
+            <th>タイトル</th>
+            <th>著者名</th>
+            <th>発行年</th>
+            <th>冊数</th>
+            <th>借りる</th>
+        </tr>
         {% for item in date %}
         <tr>
-            <td><p>タイトル:{{item.title}}</p></td>
-            <td><p>著者名:{{item.author}}</p></td>
-            <td><p>発行年:{{item.year_issue}}</p></td>
+            <td><p>{{item.title}}</p></td>
+            <td><p>{{item.author}}</p></td>
+            <td><p>{{item.year_issue}}</p></td>
             <form action="{% url 'lended' item.id %}" method="POST">
                 {% csrf_token %}
                 <script>
@@ -44,11 +51,13 @@
                         document.write("<td><p>全て借りられています。</td></p>")
                     }else{
                         document.write("<td><p>冊数:{{item.number_books}}冊</td></p>")
-                        document.write('<td><button type="submit" class = "Btn" onclick= "BtnHide();">借りる</button></td>')
+                        document.write('<td><button id="submit" type="submit">借りる</button></td>')
                         }
                 </script>
             </form>
         </tr>
+        {% empty %}
+        <h1>何も借りてません</h1>
         {% endfor %}
     </table>
 </div>

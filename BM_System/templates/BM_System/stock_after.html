@@ -22,16 +22,26 @@
 <!-- メイン -->
 {% block main %}
 <div id="main">
-    <p>この{{title.title}}は</p>
+    <div id="breadcrumb">
+        <ol>
+            <li><a href="{% url 'home' %}">HOME</a></li>
+            <li><a href="{% url 'stock' %}">在庫一覧</a></li>
+            <li>借りる</li>
+        </ol>
+    </div>
     {% if lend_jage %}
     <h1>借りれました!</h1>
+    {% else %}
+    <h1>借りられませんでした。</h1>
+    <p>この本「{{title.title}}」は</p>
+    <p>すでに同じ本を借りているか、何らかの理由で処理が正常に終了しませんでした。</p>
     {% endif %}
     <ul>
-        <li><a href="{% url 'home' %}">ホームに戻る</a></li>
-        <li><a href="{% url 'stock' %}">貸出一覧に戻る</a></li>
+        <li><a href="{% url 'home' %}">ホーム</a></li>
+        <li><a href="{% url 'stock' %}">在庫一覧に戻る</a></li>
+        <li><a href="{% url 'lending' %}">貸し出し状況</a></li>
     </ul>
-    <p>冊借りていて、残り 冊借りれます</p>
-    <li><a href="{% url 'lending' %}">貸し出し状況</a></li>
+    <p>{{ book_number }}/3冊借りています。</p>
 </div>
 {% endblock %}
 <!-- /メイン -->

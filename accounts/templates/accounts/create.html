@@ -1,10 +1,6 @@
 {% extends "BM_System/login.html" %}
 {% load static %}
 
-{% block head %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
-{% endblock %}
-
 {% block form %}
 <section>
     <h1>新規ユーザ登録</h1>
@@ -12,16 +8,12 @@
         {% csrf_token %}
         <table>
             {{ form1.as_table }}
-            <tr>
-                <th><label for="id_birth_date">誕生日:</label></th>
-                <td>
-                    <input type="text" name="birth_date" required="" id="id_birth_date">
-                    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-                    <script src="{% static 'accounts/js/user_add.js' %}"></script>
             {{ form2.as_table }}
             <tr><th><td>
-                <button type="submit" id="Btn" onclick="BtnHide(true)">作成</button>
+                <input type="text" name="submit_token" value="{{ submit_token }}" class="input_box">
+            </td></th></tr>
+            <tr><th><td>
+                <button id="submit" type="submit">作成</button>
                 <p id="Btn_text"></p>
             </tr></th></td>
         </table>
