@@ -13,7 +13,6 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 class account_info(forms.ModelForm):
-    # std_num = forms.CharField(label='学生番号', required = True)
     age = forms.IntegerField(label='年齢',min_value = 1,max_value = 120, required = True)
     choice = [('男','男性'),('女','女性')]
     gender = forms.ChoiceField(label='性別',widget=forms.RadioSelect(),choices=choice, required=True)

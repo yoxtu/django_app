@@ -11,4 +11,5 @@ urlpatterns = [
     path('contact/done/',views.done,name='done'), #ログイン後
     path('book_return/<int:ID>', views.bookReturn,name = 'book_return'),#ログイン後
     # path('management/',vews.management,name='management'),
+    path('serch/', views.bookserch, name = 'serch'),#検索用
 ]

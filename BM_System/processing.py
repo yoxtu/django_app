@@ -51,11 +51,11 @@ def set_submit_token(request):
 def exist_submit_token(request):
     #クライアントから送信されたトークンを取得
     token_in_request = request.POST.get('submit_token')
-    #一度使用したトークンだった場合セッションから破棄
+    #一度使用したトークンをセッションから破棄
     token_in_session = request.session.pop('submit_token', '')
 
     if not token_in_request:
-        return False
+        return False    
     if not token_in_session:
         return False
 
@@ -68,3 +68,4 @@ def list_check(t_list,check = None):
             re_list.append(l)
     
     return re_list
+

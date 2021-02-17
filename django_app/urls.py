@@ -20,7 +20,7 @@ urlpatterns = [
     path('', include('BM_System.urls')),
     path('admin/', admin.site.urls,name=admin),
     path('accounts/', include('accounts.urls')), #追記
-    path('WebSystem/', include('WebSystem.urls')),
+    path('websystem/', include('WebSystem.urls')),
     path('BM_System/',include('BM_System.urls')),
     path('hello/', include('hello.urls')),
 ]

@@ -16,5 +16,7 @@ class Profile(models.Model):
     book_title = models.CharField(max_length=100,null=True, blank=True)
 
     def __str__(self):
-        return '学番:' + self.std_num + ' 性別:'+ self.gender+ ' 誕生日:'+ str(self.birth_date)+\
-            ' ' + str(self.age) + '歳'
+        return '学番:' + self.std_num + ' 性別:'+ self.gender + ' ' + str(self.age) + '歳' +\
+            ' 借りている本:' + str(self.book_title)
+
+

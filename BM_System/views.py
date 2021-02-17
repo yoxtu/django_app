@@ -14,6 +14,10 @@ from accounts.models import Profile
 
 from django.db import transaction
 
+# 検索
+from django.views.generic import ListView
+from django.db.models import Q
+
 # Create your views here.
 
 
@@ -34,7 +38,7 @@ def stock(request):
         'title': '在庫一覧',
         'user_name':str(request.user),
         'user_staff' : request.user.is_staff,
-        'date':book,
+        'data':book,
     }
     return render(request, 'BM_System/stock.html',params)
 
@@ -105,34 +109,57 @@ def bookReturn(request, ID):
     }
     return render(request, 'BM_System/lending_after.html',params)
 
+    # if request.method == "POST":
+    #     if security.exist_submit_token(request):
+    #         comment = '正常にクリックが行われました'	
+    #     else:
+    #         comment = '多重クリックが行われました'
+    # else:
+    #     comment = 'クリックの判定を行います'
+    # submit_token = security.set_submit_token(request)
+    # context = {
+    #     'comment': comment,
+    #     'submit_token': submit_token,
+    # }
+    # return render(request, 'app/test_token_check.html', context)
+
 # お問い合わせ作成
 @login_required
 def contact(request):
+    form = ContactForm(request.POST or None)
+    error_msg = ""
     if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            message = "お問い合わせ内容:\n" + form.cleaned_data['message']
-            email = form.cleaned_data['email']
-            myself = form.cleaned_data['myself']
-            recipients = settings.EMAIL_HOST_ADMIN
-            recipients.append(settings.EMAIL_HOST_USER)
-            if myself:
-                return_msg = "お問い合わせありがとうございます。\n" + message + "\nお問い合わせいただき、ありがとうございました。"
-                send_mail("BMシステムへのお問い合わせ",return_msg,email,[email])
-            message += str(Import_mail_template(request.user,email))
-            try:
-                send_mail(name, message, email, recipients)
-            except BadHeaderError:
-                return HttpResponse('無効なヘッダーが見つかりました。')
-            return redirect('done')
+        if not exist_submit_token(request):
+            # Error
+            error_msg = "トークンが正しくありません。もう一度やり直してください。"
+        else:
+            if form.is_valid():
+                name = form.cleaned_data['name']
+                user = User.objects.get(id = request.user.id)
+                message = "お問い合わせ内容:\n" + form.cleaned_data['message']
+                email = form.cleaned_data['email']
+                myself = form.cleaned_data['myself']
+                recipients = settings.EMAIL_HOST_ADMIN
+                recipients.append(settings.EMAIL_HOST_USER)
+                if myself:
+                    return_msg = "お問い合わせありがとうございます。\n" + message + "\nお問い合わせいただき、ありがとうございました。"
+                    send_mail("BMシステムへのお問い合わせ",return_msg,email,[email])
+                message += str(Import_mail_template(request.user ,email ,user.profile.std_num))
+                try:
+                    send_mail(name, message, email, recipients)
+                except BadHeaderError:
+                    return HttpResponse('無効なヘッダーが見つかりました。')
+                return redirect('done')
     else:
         form = ContactForm()
+    submit_token = set_submit_token(request)
     params = {
         'title' : 'お問い合わせ',
         'user_name':str(request.user),
         'user_staff' : request.user.is_staff,
-        'form' : form
+        'form' : form,
+        'submit_token' : submit_token,
+        'error_msg' : error_msg, 
     }
     return render(request, 'BM_System/contact.html',params)
 
@@ -147,3 +174,19 @@ def done(request):
 
 # ここまで
 
+# 検索用関数
+def bookserch(request):
+    book = Book_stock.objects.order_by('-id')
+    q_word = request.GET.get('query')
+    if q_word:
+        data = Book_stock.objects.filter(
+            Q(title__icontains=q_word) | Q(author__icontains=q_word)
+        )
+    else:
+        data = Book_stock.objects.all()
+    params = {
+        'user_staff' : request.user.is_staff,
+        'data': data,
+    }
+    return render(request, 'BM_System/stock.html',params)
+# ここまで

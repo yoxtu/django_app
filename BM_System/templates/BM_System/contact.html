@@ -4,8 +4,10 @@
 <!-- ヘッダー -->
 {% block header %}
 <header>
-    <h1><a href="{% url 'home' %}"><img src="{% static 'BM_System/img/festisite_facebook.png' %}" alt="BM_System"></a></h1>
-    <div id="header_contact"><a href="{% url 'contact' %}"><img src="{% static 'BM_System/img/btn_contact.jpg' %}" alt="お問い合わせ"></a></div>
+    <h1><a href="{% url 'home' %}"><img src="{% static 'BM_System/img/festisite_facebook.png' %}" alt="BM_System"></a>
+    </h1>
+    <div id="header_contact"><a href="{% url 'contact' %}"><img src="{% static 'BM_System/img/btn_contact.jpg' %}"
+                alt="お問い合わせ"></a></div>
     <nav id="global_navi">
         <ul>
             <li><a href="{% url 'home' %}">Home</a></li>
@@ -31,32 +33,32 @@
     </div>
     <article>
         <h1>お問い合わせ</h1>
-        <form action="{% url 'contact' %}" method="POST">
+        <form id="form" n="{% url 'contact' %}" method="POST">
             <table>
                 {% csrf_token %}
                 <tr>
-                    <th><label>お名前:</label></th>
-                    <td><input name="name" maxlength="50" required type="text" placeholder="お名前"></td>
+                    <th>
+                    <th>
+                        {{ error_msg }}
+                    </th>
+                    </th>
+                </tr>
+                {{ form.as_table }}
+                <tr>
+                    <th>
+                    <td>
+                        <input type="hidden" id="submit_token" name="submit_token" value="{{ submit_token }}" class="input_box">
+                    </td>
+                    </th>
                 </tr>
                 <tr>
-                    <th><label>メールアドレス:</label></th>
-                    <td><input name="email" required="" placeholder="メールアドレス"></td>
+                    <th>
+                    <td>
+                        <button id="submit" type="submit">送信する</button>
+                        <p id="Btn_text"></p>
+                    </td>
+                    </th>
                 </tr>
-                <tr>
-                    <th><label>メッセージ:</label></th>
-                    <td><textarea name="message" cols="40" rows="10" required=""  placeholder="メッセージ"></textarea></td>
-                </tr>
-                <tr>
-                    <th><label>内容を受け取る:</label></th>
-                    <td><input type="checkbox" name="myself" ></td>
-                </tr>
-                <!-- <tr><th><td>
-                    <input type="text" name="submit_token" value="{{ submit_token }}" class="input_box">
-                </td></th></tr>                 -->
-                <tr><th><td>
-                    <button id="submit" type="submit">送信する</button>
-                    <p id="Btn_text"></p>
-                </td></th></tr>
             </table>
         </form>
     </article>
@@ -80,4 +82,3 @@
 </footer>
 {% endblock %}
 <!-- /フッター -->
-

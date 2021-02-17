@@ -4,8 +4,10 @@
 <!-- ヘッダー -->
 {% block header %}
 <header>
-    <h1><a href="{% url 'home' %}"><img src="{% static 'BM_System/img/festisite_facebook.png' %}" alt="BM_System"></a></h1>
-    <div id="header_contact"><a href="{% url 'contact' %}"><img src="{% static 'BM_System/img/btn_contact.jpg' %}"  alt="お問い合わせ"></a></div>
+    <h1><a href="{% url 'home' %}"><img src="{% static 'BM_System/img/festisite_facebook.png' %}" alt="BM_System"></a>
+    </h1>
+    <div id="header_contact"><a href="{% url 'contact' %}"><img src="{% static 'BM_System/img/btn_contact.jpg' %}"
+                alt="お問い合わせ"></a></div>
     <nav id="global_navi">
         <ul>
             <li><a href="{% url 'home' %}">Home</a></li>
@@ -30,36 +32,65 @@
     </div>
     <article>
         <h1>本一覧</h1>
-    </article>
-    <table border="1" id="stock">
-        <tr>
-            <th>タイトル</th>
-            <th>著者名</th>
-            <th>発行年</th>
-            <th>冊数</th>
-            <th>借りる</th>
-        </tr>
-        {% for item in date %}
-        <tr>
-            <td><p>{{item.title}}</p></td>
-            <td><p>{{item.author}}</p></td>
-            <td><p>{{item.year_issue}}</p></td>
-            <form action="{% url 'lended' item.id %}" method="POST">
-                {% csrf_token %}
-                <script>
-                    if("{{ item.number_books }}" <= "0"){
-                        document.write("<td><p>全て借りられています。</td></p>")
-                    }else{
-                        document.write("<td><p>冊数:{{item.number_books}}冊</td></p>")
-                        document.write('<td><button id="submit" type="submit">借りる</button></td>')
+        <label>
+            <span>popupを表示</span>
+            <input type="checkbox" name="checkbox">
+            <div id="popup"><img src="https://www.google.co.jp/search?q=9784822253523&safe=active&hl=ja&tbs=bkv:a&tbm=bks&sxsrf=ALeKk03MqpIgcYhs8oCRWv4qEpjfxmqQeA:1613227423649&source=lnt&sa=X&ved=0ahUKEwia1Jy8jOfuAhWVfXAKHfKrAV8QpwUIJg&biw=1280&bih=610&dpr=1.5" alt="TechAcademy" /></div>
+        </label>
+        <!-- 検索フォーム -->
+        <form action="{% url 'serch' %}" method="GET">
+            <select name="query" value="{{ request.GET.query }}" type="text"  placeholder="言語">
+                <option value="python">python</option>
+                <option value="java">java</option>
+                <option value="C言語">C言語</option>
+            </select>
+            <button type="submit">検索する</button>
+        </form>
+        <!-- /検索フォーム -->
+        
+        <table border="1" id="stock">
+            <tr>
+                <th>タイトル</th>
+                <th>著者名</th>
+                <th>発行年</th>
+                <th>冊数</th>
+                <th>借りる</th>
+            </tr>
+            {% for item in data %}
+            <tr>
+                <td>
+                    {{item.title}}
+                </td>
+                <td>
+                    {{item.author}}
+                </td>
+                <td>
+                    {{item.year_issue}}
+                </td>
+                <form action="{% url 'lended' item.id %}" method="POST">
+                    {% csrf_token %}
+                    <script>
+                        if ("{{ item.number_books }}" <= "0") {
+                            document.write("<td>全て借りられています。</td>")
+                        } else {
+                            document.write("<td>冊数:{{item.number_books}}冊</td>")
+                            document.write('<td><button id="submit" type="submit">借りる</button></td>')
                         }
-                </script>
-            </form>
-        </tr>
-        {% empty %}
-        <h1>何も借りてません</h1>
-        {% endfor %}
-    </table>
+                        </script>
+                </form>
+            </tr>
+            {% empty %}
+                <h1>not found(404 error)</h1>
+                <tr>
+                    <td>なし</td>
+                    <td>なし</td>
+                    <td>なし</td>
+                    <td>なし</td>
+                    <td>なし</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </article>
 </div>
 {% endblock %}
 <!-- /メイン -->

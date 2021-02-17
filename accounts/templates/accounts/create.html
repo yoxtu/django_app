@@ -4,13 +4,13 @@
 {% block form %}
 <section>
     <h1>新規ユーザ登録</h1>
-    <form action="" method="POST">
+    <form id="form" action="" method="POST">
         {% csrf_token %}
         <table>
             {{ form1.as_table }}
             {{ form2.as_table }}
             <tr><th><td>
-                <input type="text" name="submit_token" value="{{ submit_token }}" class="input_box">
+                <input type="hidden " name="submit_token" value="{{ submit_token }}" class="input_box">
             </td></th></tr>
             <tr><th><td>
                 <button id="submit" type="submit">作成</button>

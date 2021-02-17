@@ -26,7 +26,7 @@ SECRET_KEY = 'aa121cf*3bzvw7l*ktu3m_m8a6*pxtxnz@knqtwh%*9lrkts50'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*',"192.168.1.48"]
+ALLOWED_HOSTS = ['yoxtu.myddns.me','localhost']
 
 # Application definition
 
@@ -142,10 +142,10 @@ EMAIL_HOST = 'smtp.googlemail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'mysystem1123@gmail.com'
+EMAIL_HOST_PASSWORD = 'ylamgzufrmnpumra'
 
 # 管理者用(送信先)
 EMAIL_HOST_ADMIN = [
     'yoxtu11231123@gmail.com',
-    'sakura18683@gmail.com',
+    # 'sakura18683@gmail.com',
 ]
-EMAIL_HOST_PASSWORD = 'ywmtzghwffvonxfg'

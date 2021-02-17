@@ -40,6 +40,7 @@
                 <th>発行年</th>
                 <th>借りる</th>
             </tr>
+            <script src="{% static 'BM_System/js/jquery.js' %}"></script>
             {% for item in title_list %}
             <tr>
                 <td>
@@ -51,7 +52,7 @@
                 <td>
                     <p>{{item.year_issue}}</p>
                 </td>
-                <form action="{% url 'book_return' item.id %}" method="POST">
+                <form id="form" action="{% url 'book_return' item.id %}" method="POST">
                     {% csrf_token %}
                     <td><button id="submit" type="submit">返す</button></td>
                 </form>

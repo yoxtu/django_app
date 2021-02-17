@@ -2,7 +2,7 @@
 {% block form %}
 <section>
     <h1>ログイン</h1>
-    <form action="" method="POST">
+    <form id="form" action="" method="POST">
         {% csrf_token %}
         <table>
             {{ form.as_table }}
