@@ -18,11 +18,11 @@ class account_info(forms.ModelForm):
     gender = forms.ChoiceField(label='性別',widget=forms.RadioSelect(),choices=choice, required=True)
     class  Meta:
         model = Profile
-        fields =['std_num','birth_date']
+        fields =['studentNum','birthday']
         labels = {
-            'std_num': '学生番号',
-            'birth_date': '誕生日'
+            'studentNum': '学生番号',
+            'birthday': '誕生日'
         }
         widgets = {
-            'birth_date': DateInput(),
+            'birthday': DateInput(),
         }

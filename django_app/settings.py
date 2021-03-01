@@ -26,7 +26,7 @@ SECRET_KEY = 'aa121cf*3bzvw7l*ktu3m_m8a6*pxtxnz@knqtwh%*9lrkts50'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['yoxtu.myddns.me','localhost']
+ALLOWED_HOSTS = ['yoxtu.myddns.me','localhost','192.168.1.7']
 
 # Application definition
 
