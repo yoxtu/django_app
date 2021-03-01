@@ -9,14 +9,12 @@ class Profile(models.Model):
     # name
     # mail
     # password
-    std_num = models.CharField(max_length=10)
-    gender = models.CharField(max_length=1)
-    birth_date = models.DateField(null=True, blank=True)
+    studentNum = models.CharField(max_length=10)
+    gender = models.CharField(max_length=5)
+    birthday = models.DateField(null=True, blank=True)
     age = models.IntegerField(default=0)
-    book_title = models.CharField(max_length=100,null=True, blank=True)
+    isbn = models.IntegerField(max_length=13)
 
     def __str__(self):
-        return '学番:' + self.std_num + ' 性別:'+ self.gender + ' ' + str(self.age) + '歳' +\
-            ' 借りている本:' + str(self.book_title)
-
-
+        return '学番:' + self.studentNum + ' 性別:'+ self.gender + ' 年齢:' + str(self.age) + '歳' +\
+            ' \n借りている本:' + str(self.isbn)
