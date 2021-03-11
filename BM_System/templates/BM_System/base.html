@@ -37,7 +37,7 @@
                 </ul>
             </section>
             <section id="side_contact">
-                <h2>ご予約・お問い合わせ</h2>
+                <h2>お問い合わせ</h2>
                 <address><img src="{% static 'BM_System/img/mark_tel.png' %}" alt="TEL">052-232-8229</address>
                 <p>受付時間　9:00~18:00</p>
                 <p><a href="{% url 'contact' %}" class="contact_button">お問い合わせフォーム</a></p>
@@ -67,5 +67,25 @@
     {% block footer%} {% endblock %}
     <!-- /フッター -->
 </body>
-
+<script>
+    var vm = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#base',
+        data: {
+        },
+        methods: {
+        }
+    })
+</script>
+<style>
+    .v-enter-action,.v-leave-active{
+        transition:0.5;
+    }
+    .v-enter,.v-leave-to{
+        opacity:0;
+        transform:translateX(50px)
+    }
+</style>
+{% block script %}
+{% endblock %}
 </html>

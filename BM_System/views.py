@@ -42,6 +42,16 @@ def stock(request):
     }
     return render(request, 'BM_System/stock.html',params)
 
+"""
+借りる時の処理順序
+前提　本は一冊以上あること、カメラのversionは考慮しない、借りている本が3冊未満
+1．ユーザ側が本の借りるボタンを押下
+2．カメラを起動し、バーコードを読み取る
+3.システムは、読み取ったバーコードがDBにあるかどうか判定する
+4－1．あった場合、システムはuserにISBNCordを追加、Book_stockから一冊引きsaveする
+4－2．なかった場合、実行しない
+
+"""
 @login_required
 @transaction.atomic
 def lended(request, ID):
@@ -75,7 +85,7 @@ def lended(request, ID):
 @login_required
 def lending(request):
     user = User.objects.get(id = request.user.id)
-    user_title_list = make_list(user.profile.book_title)
+    user_title_list = make_list(user.profile.isbn)
     title_list = []
     user_title_list = list_check(user_title_list)
     for i in user_title_list:

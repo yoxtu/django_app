@@ -32,13 +32,12 @@
     </div>
     <article>
         <h1>本一覧</h1>
-        <label>
-            <span>popupを表示</span>
-            <input type="checkbox" name="checkbox">
-            <div id="popup"><img src="https://www.google.co.jp/search?q=9784822253523&safe=active&hl=ja&tbs=bkv:a&tbm=bks&sxsrf=ALeKk03MqpIgcYhs8oCRWv4qEpjfxmqQeA:1613227423649&source=lnt&sa=X&ved=0ahUKEwia1Jy8jOfuAhWVfXAKHfKrAV8QpwUIJg&biw=1280&bih=610&dpr=1.5" alt="TechAcademy" /></div>
-        </label>
         <!-- 検索フォーム -->
         <form action="{% url 'serch' %}" method="GET">
+        <label>
+            <span>popupを表示</span>
+            <input type="checkbox" name="popup">
+        </label>
             <select name="query" value="{{ request.GET.query }}" type="text"  placeholder="言語">
                 <option value="python">python</option>
                 <option value="java">java</option>
@@ -47,33 +46,31 @@
             <button type="submit">検索する</button>
         </form>
         <!-- /検索フォーム -->
-        
         <table border="1" id="stock">
             <tr>
                 <th>タイトル</th>
                 <th>著者名</th>
                 <th>発行年</th>
-                <th>冊数</th>
                 <th>借りる</th>
             </tr>
             {% for item in data %}
             <tr>
+                {% if request.GET.popup %}
+                <div id="popup"><img src="https://www.google.co.jp/search?q=9784822253523&safe=active&hl=ja&tbs=bkv:a&tbm=bks&sxsrf=ALeKk03MqpIgcYhs8oCRWv4qEpjfxmqQeA:1613227423649&source=lnt&sa=X&ved=0ahUKEwia1Jy8jOfuAhWVfXAKHfKrAV8QpwUIJg&biw=1280&bih=610&dpr=1.5" alt="TechAcademy" /></div>
+                {% endif %}
                 <td>
                     {{item.title}}
                 </td>
                 <td>
                     {{item.author}}
                 </td>
-                <td>
-                    {{item.year_issue}}
-                </td>
                 <form action="{% url 'lended' item.id %}" method="POST">
                     {% csrf_token %}
                     <script>
-                        if ("{{ item.number_books }}" <= "0") {
+                        if ("{{ item.numBooks }}" <= "0") {
                             document.write("<td>全て借りられています。</td>")
                         } else {
-                            document.write("<td>冊数:{{item.number_books}}冊</td>")
+                            document.write("<td>{{item.numBooks}}冊</td>")
                             document.write('<td><button id="submit" type="submit">借りる</button></td>')
                         }
                         </script>
@@ -82,7 +79,6 @@
             {% empty %}
                 <h1>not found(404 error)</h1>
                 <tr>
-                    <td>なし</td>
                     <td>なし</td>
                     <td>なし</td>
                     <td>なし</td>

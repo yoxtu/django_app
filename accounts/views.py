@@ -38,8 +38,8 @@ def create_info(request):
             profile = profile_form.save(commit=False)
             profile.gender = profile_form.cleaned_data["gender"]
             profile.age = profile_form.cleaned_data["age"]
-            profile.birth_date = profile_form.cleaned_data["birth_date"]
-            profile.book_title = ''
+            profile.birth_date = profile_form.cleaned_data["birthday"]
+            profile.book_title = None
             profile.user = user
             profile.save()
 

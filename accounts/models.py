@@ -1,4 +1,6 @@
 from django.db import models
+from django.core import validators
+
 
 # Create your models here.
 
@@ -13,7 +15,7 @@ class Profile(models.Model):
     gender = models.CharField(max_length=5)
     birthday = models.DateField(null=True, blank=True)
     age = models.IntegerField(default=0)
-    isbn = models.IntegerField(max_length=13)
+    isbn = models.CharField(max_length=13)
 
     def __str__(self):
         return '学番:' + self.studentNum + ' 性別:'+ self.gender + ' 年齢:' + str(self.age) + '歳' +\
