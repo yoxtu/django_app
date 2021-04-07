@@ -1,0 +1,23 @@
+{% extends "BM_System/login.html" %}
+{% load static %}
+
+{% block form %}
+<section>
+    <h1>新規ユーザ登録</h1>
+    <form id="form" action="" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form1.as_table }}
+            {{ form2.as_table }}
+            <tr><th><td>
+                <input type="hidden " name="submit_token" value="{{ submit_token }}" class="input_box">
+            </td></th></tr>
+            <tr><th><td>
+                <button id="submit" type="submit">作成</button>
+                <p id="Btn_text"></p>
+            </tr></th></td>
+        </table>
+    </form>
+</section>
+{% endblock %}
+

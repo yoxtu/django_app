@@ -45,16 +45,18 @@
             {% block accounts_info %}
             <section id="accounts_info">
                 <h2>アカウント</h2>
-                {% if user_name == "AnonymousUser" %}
-                <p>ログインしていません。</p>
-                <p><a href="{% url 'login'%}" class="login_out_button">ログイン</a></p>
-                {% elif user_staff %}
-                <p>{{request.user}}様</p>
-                <p><a href="{% url 'logout'%}" class="login_out_button">ログアウト</a></p>
-                <p><a href="{% url 'admin:index' %}" class="login_out_button">管理画面</a></p>
+                {% if user.is_authenticated %}
+                {% if user_staff %}
+                    <p>{{request.user}}様</p>
+                        <p><a href="{% url 'logout'%}" class="login_out_button">ログアウト</a></p>
+                        <p><a href="{% url 'admin:index' %}" class="login_out_button">管理画面</a></p>
+                    {% else %}
+                        <p>{{request.user}}様</p>
+                        <p><a href="{% url 'logout'%}" class="login_out_button">ログアウト</a></p>
+                    {% endif %}
                 {% else %}
-                <p>{{request.user}}様</p>
-                <p><a href="{% url 'logout'%}" class="login_out_button">ログアウト</a></p>
+                    <p>ログインしていません。</p>
+                    <p><a href="{% url 'login'%}" class="login_out_button">ログイン</a></p>
                 {% endif %}
             </section>
             {% endblock %}

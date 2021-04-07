@@ -2,16 +2,24 @@ from django.shortcuts import *
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-#追加 お問い合わせ時
+
+#お問い合わせ用（メール送信など）
 from django.conf import settings
 from django.core.mail import BadHeaderError, send_mail
-from .forms import ContactForm
 from BM_System.processing import *
-# ここまで
 
+# データベースのインポート
 from .models import Book_stock
+from .models import Book_details
+from .models import Lending_log
 from accounts.models import Profile
 
+#フォームのインポート
+from .forms import ContactForm
+from .forms import book_stock_form
+from .forms import book_details_form
+
+# トランザクション
 from django.db import transaction
 
 # 検索
@@ -98,6 +106,7 @@ def lending(request):
     }
     return render(request, 'BM_System/lending.html',params)
 
+
 # 返す処理
 @login_required
 @transaction.atomic
@@ -183,6 +192,50 @@ def done(request):
     return render(request, 'BM_System/done.html', params)
 
 # ここまで
+
+# 検索用関数
+def bookserch(request):
+    book = Book_stock.objects.order_by('-id')
+    q_word = request.GET.get('query')
+    if q_word:
+        data = Book_stock.objects.filter(
+            Q(title__icontains=q_word) | Q(author__icontains=q_word)
+        )
+    else:
+        data = Book_stock.objects.all()
+    params = {
+        'user_staff' : request.user.is_staff,
+        'data': data,
+    }
+    return render(request, 'BM_System/stock.html',params)
+# ここまで
+
+# 本の登録管理画面
+@login_required
+def management(request):
+    stock_form = book_stock_form(request.POST or None)
+    details_form = book_details_form(request.POST or None)
+
+    submit_token = set_submit_token(request)
+    if request.method == "POST" and stock_form.is_valid() and details_form.is_valid():
+        if exist_submit_token(request):
+            # BookStockを保存
+            book_stock = stock_form.save(commit=False)
+            book_stock.save()
+            
+            details = details_form.save(commit=False)
+            # detailsにbook_stockを紐づける
+            details.book_stock = book_stock
+            details.save()
+            return redirect('done')
+
+    data = {
+        "form1": stock_form,
+        "form2": details_form,
+        'submit_token': submit_token,
+    }
+    return render(request, 'BM_System/create.html', data)
+
 
 # 検索用関数
 def bookserch(request):

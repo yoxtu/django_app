@@ -145,7 +145,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'mysystem1123@gmail.com'
 EMAIL_HOST_PASSWORD = 'ylamgzufrmnpumra'
 
-# 管理者用(送信先)
+# 管理者用(お問い合わせ送信先)
 EMAIL_HOST_ADMIN = [
     'yoxtu11231123@gmail.com',
     # 'sakura18683@gmail.com',

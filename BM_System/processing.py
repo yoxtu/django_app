@@ -55,7 +55,7 @@ def exist_submit_token(request):
     token_in_session = request.session.pop('submit_token', '')
 
     if not token_in_request:
-        return False    
+        return False
     if not token_in_session:
         return False
 
